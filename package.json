@@ -2,9 +2,11 @@
   "name": "p5cc",
   "version": "3.0.0",
   "description": "Persona 5 Calling Card Maker, runs purely on browser.",
-  "main": "app.js",
+  "main": "index.html",
   "scripts": {
-    "local": "node app.js"
+    "start": "http-server .",
+    "dev": "live-server .",
+    "build": "echo 'Build completed for static deployment"
   },
   "repository": {
     "type": "git",
@@ -16,8 +18,8 @@
     "url": "https://github.com/skyventuree/p5cc/issues"
   },
   "homepage": "https://github.com/skyventuree/p5cc#readme",
-  "dependencies": {
-    "express": "^4.17.3",
-    "serve-favicon": "^2.5.0"
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
   }
 }

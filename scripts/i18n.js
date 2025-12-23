@@ -1,5 +1,5 @@
 const VERSION = 1;
-let language = "en";
+let language = "zh";
 
 async function initLanguage() {
     console.info("[i18n::initLanguage] Initializing language settings...");
@@ -44,11 +44,18 @@ async function initLanguage() {
 function changeLang() {
     const select = document.querySelector('#lang-select');
     if (select) {
-        const newLang = select.value;
-        const date = new Date();
-        date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = `lang=${newLang};expires=${date.toUTCString()};path=/`;
-        window.location.reload();
+        // マルチセレクト対応のため、選択された値を取得
+        const selectedOptions = Array.from(select.selectedOptions);
+        if (selectedOptions.length > 0) {
+            const newLang = selectedOptions[0].value;
+            const date = new Date();
+            date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+            document.cookie = `lang=${newLang};expires=${date.toUTCString()};path=/`;
+            
+            // ページリロードではなく、言語の再読み込みを行う
+            language = newLang;
+            loadLanguage();
+        }
     }
 }
 
@@ -107,7 +114,6 @@ async function loadLanguage() {
             },
             // チェックボックスのラベル
             checkbox: {
-                "showWatermark": langData.editor.show_watermark,
                 "show-logo": langData.advanced.options.show_logo
             },
             // ボタン
@@ -163,13 +169,20 @@ async function loadLanguage() {
 
     } catch (error) {
         console.error("[i18n::loadLanguage] Failed to load language file:", error);
-        if (language !== "en") {
-            language = "en";
+        if (language !== "zh") {
+            language = "zh";
             loadLanguage();
         }
     }
 }
 
-// 初期化処理の順序を変更
-initLanguage().then(loadLanguage);
+// DOMが完全に読み込まれた後に初期化処理を実行
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initLanguage().then(loadLanguage);
+    });
+} else {
+    // DOMが既に読み込まれている場合
+    initLanguage().then(loadLanguage);
+}
 
