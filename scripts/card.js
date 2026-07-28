@@ -17,7 +17,7 @@ logo.onload = redrawBg;
 // for the card canvas
 function redrawBg() {
     // asset calculations
-    console.log(`[card::redrawBg] showLogo:${showLogo} showWtm:${showWtm}`);
+    console.log(`[card::redrawBg] showLogo:${showLogo}`);
 
     const logoScale = document.querySelector('#logo-size-option').value;
     const logoOffset = document.querySelector('#logo-offset').value;
@@ -35,12 +35,6 @@ function redrawBg() {
             logoWidth * logoScale,
             logoHeight * logoScale);
     }
-
-    // if (showWtm) {
-    //     card.fillStyle = 'rgba(255, 255, 255, 0.65)';
-    //     card.textAlign = 'left';
-    //     card.fillText('skyventuree.github.io/p5cc', 30, canvas.height - 30);
-    // }
 }
 
 // for the text canvas

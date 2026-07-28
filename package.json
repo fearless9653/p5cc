@@ -2,11 +2,8 @@
   "name": "p5cc",
   "version": "3.0.0",
   "description": "Persona 5 Calling Card Maker, runs purely on browser.",
-  "main": "index.html",
   "scripts": {
-    "start": "http-server .",
-    "dev": "live-server .",
-    "build": "echo 'Build completed for static deployment"
+    "start": "http-server ."
   },
   "repository": {
     "type": "git",
@@ -19,7 +16,6 @@
   },
   "homepage": "https://github.com/skyventuree/p5cc#readme",
   "devDependencies": {
-    "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
+    "http-server": "^14.1.1"
   }
 }

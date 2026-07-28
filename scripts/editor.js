@@ -1,7 +1,6 @@
 // editor related switches and option
-var showLogo = true, 
-    showWtm = true, 
-    isMiddle = true, 
+var showLogo = true,
+    isMiddle = true,
     textStroke = true,
     textStrokeWidth = 6;
     

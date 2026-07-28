@@ -2,33 +2,39 @@
 
 ## 配置说明
 
-本项目已配置为可在Cloudflare Pages上部署的静态网站。以下是部署步骤：
+本项目是纯静态网站，无需构建步骤，可直接部署到Cloudflare Pages。
 
-## 部署到Cloudflare Pages
+## 部署步骤
 
 1. 在Cloudflare Dashboard中创建一个新的Pages项目
 2. 连接到你的GitHub/GitLab仓库
 3. 在"Build & deployments"部分，使用以下设置：
    - Framework preset: `None`
-   - Build command: `echo "Static site, no build required"`
+   - Build command: （留空）
    - Build output directory: `./`
    - Root directory: `/`
 
 ## 静态资源配置
 
-项目包含以下配置文件以优化静态部署：
+- `_headers` - 设置HTTP响应头：
+  - HTML/JS/CSS/JSON使用`max-age=0, must-revalidate`，发布后用户立即可见更新（Cloudflare边缘节点仍通过ETag协商缓存保证性能）
+  - `assets/`目录（字体、卡片底图等不常变动的素材）使用一年长缓存
+  - 安全头：CSP（含Cloudflare Web Analytics所需的`connect-src`）、`X-Content-Type-Options`、`Referrer-Policy`、`frame-ancestors`
 
-- `_headers` - 设置HTTP响应头和缓存策略
-- `_redirects` - 将所有路由重定向到index.html（支持SPA路由）
-- `vercel.json` - Vercel部署配置（可选）
-- `static.json` - Netlify等平台的部署配置（可选）
+注意：本项目没有客户端路由，因此不需要`_redirects`的SPA兜底规则——保留真实的404有助于及早发现资源路径错误。
+
+## 本地开发
+
+```bash
+pnpm install
+pnpm start   # http-server，默认 http://localhost:8080
+```
 
 ## 国际化功能
 
-国际化功能已优化，支持在静态环境中正常工作：
-- 语言选择不再导致页面刷新
-- 语言设置保存在cookie中
-- 所有语言文件都可在languages/目录下找到
+- 语言切换不刷新页面，直接重新加载语言文件
+- 语言设置保存在cookie中，首次访问按浏览器语言自动选择
+- 语言文件位于`languages/`目录，加载失败时回退到中文
 
 ## 功能说明
 

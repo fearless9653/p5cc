@@ -32,9 +32,6 @@ async function initLanguage() {
                 option.selected = code === language;
                 select.appendChild(option);
             }
-            
-            // イベントリスナーを追加
-            select.addEventListener('change', changeLang);
         }
     } catch (error) {
         console.error("[i18n::initLanguage] Failed to load language list:", error);
@@ -43,19 +40,14 @@ async function initLanguage() {
 
 function changeLang() {
     const select = document.querySelector('#lang-select');
-    if (select) {
-        // マルチセレクト対応のため、選択された値を取得
-        const selectedOptions = Array.from(select.selectedOptions);
-        if (selectedOptions.length > 0) {
-            const newLang = selectedOptions[0].value;
-            const date = new Date();
-            date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-            document.cookie = `lang=${newLang};expires=${date.toUTCString()};path=/`;
-            
-            // ページリロードではなく、言語の再読み込みを行う
-            language = newLang;
-            loadLanguage();
-        }
+    if (select && select.value) {
+        const date = new Date();
+        date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+        document.cookie = `lang=${select.value};expires=${date.toUTCString()};path=/`;
+
+        // ページリロードではなく、言語の再読み込みを行う
+        language = select.value;
+        loadLanguage();
     }
 }
 
